@@ -10,10 +10,15 @@ import Foundation
 // MARK: - create the request URL
 
 enum Endpoint {
+    /// returns Senators and Representatives for a specific zipcode; e.g. 31023
     case allByZip(zip: String)
+    /// returns Representatives for a state; e.g. "NV"
     case repsByState(state: String)
+    /// returns Representatives for a state by name; e.g. "smith"
     case repsByName(name: String)
+    /// returns Senators for a state; e.g. "NV"
     case senatorByState(state: String)
+    /// returns Senators by name; e.g. "johnson"
     case senatorByName(name: String)
 }
 

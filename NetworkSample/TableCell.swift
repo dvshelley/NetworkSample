@@ -14,9 +14,9 @@ class TableCell: UITableViewCell {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
     
-    func configure(member:Representative) {
-        nameLabel.text = member.name
-        locationLabel.text = "\(member.state) \(member.district)"
-        phoneLabel.text = member.phone
+    func configure(_ item:Representative) {
+        nameLabel.text = item.name
+        locationLabel.text = "\(item.state) \(item.district)"
+        phoneLabel.text = item.phone
     }
 }

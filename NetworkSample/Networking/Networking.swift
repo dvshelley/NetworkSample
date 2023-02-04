@@ -35,6 +35,7 @@ class Networking: NSObject {
         return urlRequest
     }
     
+    /// convert the response into the object type
     private func handle<T: Decodable>(_ response: URLResponse?, with data: Data?) throws -> (T?, Error?) {
         if let response = response as? HTTPURLResponse, let httpStatus = response.httpStatus, !httpStatus.httpStatusType.isSuccess {
             return (nil, httpStatus)
@@ -46,8 +47,8 @@ class Networking: NSObject {
             return (typeResponse, nil)
         } catch {
             print(error)
-            let responseString = String(decoding: httpData, as: UTF8.self)
-            print(responseString)
+            // nicely format the JSON response before sending it to the debug console
+            print(httpData.prettyPrintedJSON ?? "nil")
             return (nil, error)
         }
     }
@@ -60,4 +61,12 @@ enum AppError: Error {
     case httpError(status: HTTPStatus)
     case badResponse
     case mappingFailed
+}
+
+extension Data {
+    var prettyPrintedJSON: String? {
+        guard let jsonObject = try? JSONSerialization.jsonObject(with: self, options: []),
+              let data = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]) else { return nil }
+        return String(decoding: data, as: UTF8.self)
+    }
 }
